@@ -17,6 +17,7 @@ test('the published preset preserves all three attractors and the edited ellipti
   });
   const before=motion.cameraOrbit.scale.clone(),radius=motion.cameraOrbit.radius;
   motion.cameraOrbit.radius=radius*2;assert.ok(motion.cameraOrbit.scale.distanceTo(before.multiplyScalar(2))<1e-12);
+  motion.cameraOrbit.radius=0;motion.cameraOrbit.radius=radius*2;assert.ok(motion.cameraOrbit.scale.distanceTo(before)<1e-12);
   assert.throws(()=>motion.cameraOrbit.radius=-1,RangeError);
 });
 test('motion advances phase and local-axis spin while preserving orbit transforms',()=>{

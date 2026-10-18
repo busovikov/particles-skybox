@@ -12,6 +12,7 @@ export declare class ParticleSkybox {
   readonly time:number;
   readonly disposed:boolean;
   readonly ready:boolean;
+  readonly settings:SkyboxPreset['settings'];
   readonly position:Vector3;
   readonly rotation:Quaternion;
   readonly cameraOrbit:Group & {radius:number;phase:number;speed:number;enabled:boolean};

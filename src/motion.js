@@ -5,11 +5,11 @@ export function restorePose(object,pose){
   object.position.fromArray(pose.position);object.quaternion.fromArray(pose.quaternion).normalize();object.scale.fromArray(pose.scale);
 }
 export class ParticleOrbit extends Group{
-  constructor(pose){super();restorePose(this,pose);this.phase=pose.phase;this.speed=pose.speed;this.enabled=pose.enabled;}
+  constructor(pose){super();restorePose(this,pose);this.phase=pose.phase;this.speed=pose.speed;this.enabled=pose.enabled;this.radiusShape=this.radius>0?this.scale.clone().divideScalar(this.radius):new Vector3(1,1,1);}
   advance(delta){if(this.enabled)this.phase=(this.phase+this.speed*delta)%(Math.PI*2);}
   samplePosition(target){this.updateWorldMatrix(true,false);return target.set(Math.cos(this.phase),0,Math.sin(this.phase)).applyMatrix4(this.matrixWorld);}
   get radius(){return (Math.abs(this.scale.x)+Math.abs(this.scale.z))/2;}
-  set radius(value){if(!Number.isFinite(value)||value<0)throw new RangeError('Orbit radius must be finite and non-negative');const current=this.radius;if(current>0)this.scale.multiplyScalar(value/current);else this.scale.setScalar(value);}
+  set radius(value){if(!Number.isFinite(value)||value<0)throw new RangeError('Orbit radius must be finite and non-negative');const current=this.radius;if(current>0)this.radiusShape.copy(this.scale).divideScalar(current);this.scale.copy(this.radiusShape).multiplyScalar(value);}
 }
 export function createMotion(preset){
   const cameraOrbit=new ParticleOrbit(preset.objects['orbit-camera']);

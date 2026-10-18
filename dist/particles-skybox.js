@@ -1,6 +1,6 @@
 import * as c from "three/webgpu";
-import { Box3 as it, Frustum as rt, Matrix4 as H, Vector3 as E, WebGLCoordinateSystem as nt, WebGPUCoordinateSystem as ot, Quaternion as at, Vector4 as ct, PerspectiveCamera as ut, Group as V } from "three/webgpu";
-import { uniformArray as L, instancedArray as S, uniform as g, Fn as R, vec3 as B, sin as I, cos as U, instanceIndex as l, hash as P, PI as D, Loop as ht, uint as _, If as F, mod as q, vec4 as O, mix as T, float as $, positionLocal as X, uv as lt, exp as pt } from "three/tsl";
+import { Box3 as it, Frustum as rt, Matrix4 as H, Vector3 as P, WebGLCoordinateSystem as nt, WebGPUCoordinateSystem as ot, Quaternion as at, Vector4 as ct, PerspectiveCamera as ut, Group as V } from "three/webgpu";
+import { uniformArray as L, instancedArray as S, uniform as g, Fn as E, vec3 as B, sin as I, cos as U, instanceIndex as l, hash as R, PI as D, Loop as ht, uint as _, If as F, mod as q, vec4 as O, mix as T, float as $, positionLocal as X, uv as lt, exp as pt } from "three/tsl";
 const dt = 2, mt = "Моя сцена", ft = { attractorMassExponent: 8, particleGlobalMassExponent: 3, maxSpeed: 8, velocityDamping: 0.1, spinningStrength: 4.59, scale: 0.1, boundHalfExtent: 15.89, colorA: "#962eff", colorB: "#ff9c66", timeScale: 0.1, skyFov: 60, viewerReference: !1 }, gt = 2048, bt = !1, yt = "skybox", xt = !1, vt = "scale", wt = { "orbit-camera": { position: [0, -0.07909831471414508, 0], quaternion: [-0.059751229435930364, 0.0050470440816071365, 0.08401643624436621, 0.9946585124391837], scale: [8.925377071000408, 8, 6.878586419515566], phase: 4.590613385988791, speed: 6e-3, enabled: !0 }, "capture-rig": { position: [-1.0688472014706736, -1.0770066876194873, -6.756775741587193], quaternion: [0, 0, -0.3448474894689577, 0.9386587287225092], scale: [1, 1, 1] }, "orbit-0": { position: [-0.17860619515673035, -0.383022221559489, 0], quaternion: [0, 0, -0.21643961393810288, 0.9762960071199334], scale: [0.9063077870366499, 0.9063077870366499, 0.9063077870366499], phase: 0.706080765794068, speed: 0.12, enabled: !0 }, "attractor-0": { position: [0.4464011680361254, -0.6744679414195802, 0.5880637662475189], quaternion: [0, 0, 0.958746087657905, 0.2842638552478729], scale: [1, 1, 1], spinSpeed: 0.08 }, "orbit-1": { position: [0.08332092435893496, -0.35736459782197905, -0.1443160743232787], quaternion: [0.18744220405569356, 0, 0.10821980696905138, 0.9762960071199334], scale: [1.0461935951244519, 1.0461935951244519, 1.0461935951244519], phase: -4.752368473480494, speed: -0.096, enabled: !0 }, "attractor-1": { position: [0.1665667069693944, -0.7311276271773188, 0.8292815715469837], quaternion: [0, 0, 0.38732442518527316, -0.9219434850651053], scale: [1, 1, 1], spinSpeed: -0.064 }, "orbit-2": { position: [-0.018416804250367468, 0.0789899283371657, -0.03189884067468687], quaternion: [-0.1874422040556935, 0, 0.10821980696905154, 0.9762960071199334], scale: [1.1146317223666766, 1.1146317223666766, 1.1146317223666766], phase: 3.070881854150834, speed: 0.078, enabled: !0 }, "attractor-2": { position: [-1.1074151786680757, -0.1271306854639774, 0.08642575350561435], quaternion: [-0.2745065303802807, 0.15699097037214416, -0.19797057915478714, 0.927797202942219], scale: [1, 1, 1], spinSpeed: 0.052 } }, Mt = { spinSpeed: 6e-3, spinAngle: 3.0198170591995566 }, St = { editor: { position: [-32.23452834864988, -2.7805009784612333, 8.051993707569995], quaternion: [0.03289257791385956, -0.6149523541414308, 0.025686880404538766, 0.7874591193383792], scale: [1, 1, 1], zoom: 1, target: [0, 0, 0] }, sky: { position: [7.994222503797211, 1.176624748290207, 28.262063768639617], quaternion: [-0.019828540637126198, 0.13736614150954637, 0.0027503993939213163, 0.9903180334852815], scale: [1, 1, 1], zoom: 1, target: [0, 0, 0] } }, At = "f683f6de-bbb1-4a91-9eb7-e0d52ded4eb7", Bt = {
   version: dt,
   name: mt,
@@ -34,23 +34,23 @@ class Pt {
       boundHalfExtent: g(s.boundHalfExtent),
       colorA: g(new c.Color(s.colorA)),
       colorB: g(new c.Color(s.colorB))
-    }, d = () => _(Math.floor(Math.random() * 16777215)), v = R(([h, m]) => B(
+    }, d = () => _(Math.floor(Math.random() * 16777215)), v = E(([h, m]) => B(
       I(h).mul(I(m)),
       U(h),
       I(h).mul(U(m))
     ));
-    this.initCompute = R(() => {
+    this.initCompute = E(() => {
       const h = o.element(l), m = u.element(l);
       h.assign(B(
-        P(l.add(d())),
-        P(l.add(d())),
-        P(l.add(d()))
+        R(l.add(d())),
+        R(l.add(d())),
+        R(l.add(d()))
       ).sub(0.5).mul(B(5, 0.2, 5))), r.element(l).assign(h);
-      const M = P(l.add(d())).mul(D).mul(2), y = P(l.add(d())).mul(D);
+      const M = R(l.add(d())).mul(D).mul(2), y = R(l.add(d())).mul(D);
       m.assign(v(M, y).mul(0.05)), this.previousVelocityBuffer.element(l).assign(m);
     })().compute(b).setName("Reset particles");
-    const f = P(l.add(d())).remap(0.25, 1);
-    this.massMultiplier = f, this.updateCompute = R(() => {
+    const f = R(l.add(d())).remap(0.25, 1);
+    this.massMultiplier = f, this.updateCompute = E(() => {
       const h = o.element(l);
       r.element(l).assign(h);
       const m = u.element(l);
@@ -72,7 +72,7 @@ class Pt {
       blending: c.AdditiveBlending,
       depthWrite: !1
     });
-    p.positionNode = this.interpolatedPosition(), p.colorNode = R(() => {
+    p.positionNode = this.interpolatedPosition(), p.colorNode = E(() => {
       const m = this.interpolatedVelocity().length().div(a.maxSpeed.max(1e-6)).smoothstep(0, 0.5);
       return O(T(a.colorA, a.colorB, m), 1);
     })(), p.scaleNode = f.mul(a.scale), this.geometry = new c.PlaneGeometry(1, 1), this.mesh = new c.InstancedMesh(this.geometry, p, b), this.mesh.frustumCulled = !1, e.add(this.mesh), this.reset();
@@ -86,7 +86,7 @@ class Pt {
   }
   interpolatedPosition(t) {
     const e = t === void 0 ? this.previousPositionBuffer.toAttribute().xyz : this.previousPositionBuffer.element(t), n = t === void 0 ? this.positionBuffer.toAttribute().xyz : this.positionBuffer.element(t), s = this.uniforms.boundHalfExtent, o = this.uniforms.interpolation;
-    return R(() => {
+    return E(() => {
       const r = T(e, n, o).toVar();
       return F(s.greaterThan(0), () => {
         const u = s.div(2), a = q(n.sub(e).add(u), s).sub(u);
@@ -113,7 +113,7 @@ class Pt {
 }
 class Rt {
   constructor() {
-    this.bounds = new it(), this.bounded = !1, this.frustum = new rt(), this.projectionView = new H(), this.halfSize = new E();
+    this.bounds = new it(), this.bounded = !1, this.frustum = new rt(), this.projectionView = new H(), this.halfSize = new P();
   }
   /**
    * halfExtent is half the periodic domain's side, not the UI's full extent.
@@ -139,7 +139,7 @@ class Et {
     const s = S(b, "vec4"), o = S(b, "vec3"), r = S(b, "vec3"), u = this.radiance = S(b, "vec3");
     this.preparedBuffers = { centerSize: s, directions: o, tangents: r, radiance: u };
     const a = e.uniforms;
-    this.compute = R(() => {
+    this.compute = E(() => {
       const M = e.interpolatedPosition(l).toVar(), y = M.sub(this.origin).toVar(), w = y.length().max(1e-5), x = y.div(w).toVar();
       F(y.dot(y).lessThan(1e-10), () => {
         x.assign(B(0, 0, 1));
@@ -266,7 +266,7 @@ class Tt {
 }
 const zt = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]].map((i, t) => {
   const e = new ut();
-  return t === 2 && e.up.set(0, 0, -1), t === 3 && e.up.set(0, 0, 1), e.lookAt(new E(...i)), [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([n, s]) => new E(n, s, -1).applyQuaternion(e.quaternion));
+  return t === 2 && e.up.set(0, 0, -1), t === 3 && e.up.set(0, 0, 1), e.lookAt(new P(...i)), [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([n, s]) => new P(n, s, -1).applyQuaternion(e.quaternion));
 });
 function Wt(i) {
   i.updateWorldMatrix(!0, !1);
@@ -292,14 +292,14 @@ function Wt(i) {
     return !0;
   });
 }
-const It = new E(0, 1, 0);
+const It = new P(0, 1, 0);
 function j(i, t) {
   if (!t) throw new TypeError("Missing orbit or attractor pose in preset");
   i.position.fromArray(t.position), i.quaternion.fromArray(t.quaternion).normalize(), i.scale.fromArray(t.scale);
 }
 class J extends V {
   constructor(t) {
-    super(), j(this, t), this.phase = t.phase, this.speed = t.speed, this.enabled = t.enabled;
+    super(), j(this, t), this.phase = t.phase, this.speed = t.speed, this.enabled = t.enabled, this.radiusShape = this.radius > 0 ? this.scale.clone().divideScalar(this.radius) : new P(1, 1, 1);
   }
   advance(t) {
     this.enabled && (this.phase = (this.phase + this.speed * t) % (Math.PI * 2));
@@ -313,7 +313,7 @@ class J extends V {
   set radius(t) {
     if (!Number.isFinite(t) || t < 0) throw new RangeError("Orbit radius must be finite and non-negative");
     const e = this.radius;
-    e > 0 ? this.scale.multiplyScalar(t / e) : this.scale.setScalar(t);
+    e > 0 && this.radiusShape.copy(this.scale).divideScalar(e), this.scale.copy(this.radiusShape).multiplyScalar(t);
   }
 }
 function qt(i) {
@@ -323,7 +323,7 @@ function qt(i) {
   e.add(n), n.rotation.y = i.rig.spinAngle;
   const s = [0, 1, 2].map((r) => {
     const u = new V();
-    return j(u, i.objects[`attractor-${r}`]), { orbit: new J(i.objects[`orbit-${r}`]), reference: u, position: new E(), axis: new E(), spinSpeed: i.objects[`attractor-${r}`].spinSpeed };
+    return j(u, i.objects[`attractor-${r}`]), { orbit: new J(i.objects[`orbit-${r}`]), reference: u, position: new P(), axis: new P(), spinSpeed: i.objects[`attractor-${r}`].spinSpeed };
   }), o = { cameraOrbit: t, captureRig: e, spinRoot: n, attractors: s, spinSpeed: i.rig.spinSpeed, spinAngle: i.rig.spinAngle };
   return Q(o), o;
 }
