@@ -2,7 +2,7 @@
 
 A living particle skybox for a Three.js world. GPU attractors, six orbital capture cameras, and simulation warmup. Based on the original WebGPU renderer, with the full **Моя сцена** preset: three attractors, edited elliptical camera orbit, signed orbit/spin rates, colors and physical parameters.
 
-**[Live demo](https://busovikov.github.io/particles-skybox/)** · [Preset](src/current-preset.json) · [License](LICENSE)
+**[Live demo](https://busovikov.github.io/particles-skybox/)** · [Download library (.tgz)](https://busovikov.github.io/particles-skybox/particles-skybox-0.1.0.tgz) · [Preset](src/current-preset.json) · [License](LICENSE)
 
 ![Live particle skybox demo](docs/preview.png)
 
@@ -11,6 +11,8 @@ A living particle skybox for a Three.js world. GPU attractors, six orbital captu
 ```sh
 npm install three@0.180.0 github:busovikov/particles-skybox
 ```
+
+You can also download the `.tgz` archive from the demo and install it with `npm install ./particles-skybox-0.1.0.tgz`.
 
 The repository includes the built ES module in `dist/`. Three.js is a peer dependency and is not bundled into the library. Use the same Three.js version as your renderer; tested against r180. A renderer from `three/webgpu` is required, not `WebGLRenderer` from `three`.
 

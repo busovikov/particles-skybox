@@ -26,7 +26,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build --config vite.library.config.js",
-    "build:demo": "vite build",
+    "build:demo": "npm run build && vite build && npm pack --ignore-scripts --pack-destination demo-dist --cache .npm-cache",
     "test": "node --test",
     "prepack": "npm run build"
   },
