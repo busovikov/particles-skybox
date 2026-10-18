@@ -1,0 +1,4 @@
+node_modules/
+demo-dist/
+*.tgz
+.DS_Store

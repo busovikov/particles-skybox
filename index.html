@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#08070c"><meta name="description" content="A living particle skybox for your Three.js world. GPU attractors, orbital cameras, and simulation warmup."><title>Particles Skybox — a world in motion</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%2308070c'/%3E%3Cellipse cx='20' cy='20' rx='16' ry='7' fill='none' stroke='%23d3b2ff' transform='rotate(-30 20 20)'/%3E%3Ccircle cx='20' cy='20' r='3' fill='%23ff9c66'/%3E%3C/svg%3E"><link rel="stylesheet" href="./demo/style.css"></head>
+<body>
+<header class="site-header"><a class="wordmark" href="#"><svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><ellipse cx="18" cy="18" rx="16" ry="6" transform="rotate(-35 18 18)"/><circle cx="18" cy="18" r="2.5"/></svg>PARTICLES<span>SKYBOX</span></a><nav aria-label="Main navigation"><a href="#integration">Integration</a><a href="https://github.com/busovikov/particles-skybox" target="_blank" rel="noreferrer">GitHub <span>↗</span></a></nav><span class="release"><i></i> OPEN SOURCE · v0.1</span></header>
+<main>
+<section class="hero" aria-labelledby="hero-title"><div id="world" aria-label="Interactive Three.js world with a particle skybox"></div><div class="hero-shade"></div>
+<div class="hero-copy"><span class="eyebrow">AN ATMOSPHERE THAT NEVER STANDS STILL</span><h1 id="hero-title">Give your world<br>a little <em>gravity.</em></h1><p>262,144 particles. Three attractors. One living skybox.<br>Made for the Three.js world you’re already building.</p><a class="primary-link" href="#integration">Bring it into your world <span>↗</span></a></div>
+<div class="scene-label"><span class="cross">+</span><div>LIVE SIMULATION<span>YOUR PRESET / GPU ATTRACTORS</span></div></div>
+<div id="loading" class="loading" role="status"><div class="loading-orbit"></div><strong id="load-label">Warming up the universe</strong><span id="load-progress">Preparing GPU…</span><div class="progress-track"><i id="progress-bar"></i></div></div>
+<div id="fallback" class="fallback" hidden><span>THIS WORLD NEEDS A GPU</span><h2>Almost in orbit.</h2><p id="fallback-message"></p></div>
+<section class="demo-panel" aria-label="Live demo settings"><div class="panel-heading"><span>MAKE IT YOURS</span><b><i></i> LIVE</b></div>
+<label class="slider-label" for="speed">Simulation speed<output id="speed-value">0.10×</output></label><input id="speed" disabled type="range" min="0" max="1" step=".01" value=".1">
+<div class="color-row"><label for="color">Particle color<span>Slow → warm</span></label><div class="color-value"><span id="color-value">#962EFF</span><input id="color" disabled type="color" value="#962eff" aria-label="Particle color"></div></div>
+<label class="slider-label" for="radius">Camera orbit radius<output id="radius-value">7.90</output></label><input id="radius" disabled type="range" min="0" max="16" step=".01" value="7.90"><p>Drag to explore · scroll to move</p></section>
+<div class="hero-footer"><span>REAL-TIME GPU SIMULATION</span><span id="engine">WEBGPU / THREE.JS</span><a href="#integration">SCROLL TO INTEGRATE <span>↓</span></a></div>
+</section>
+<section id="integration" class="integration"><div class="integration-title"><span class="eyebrow">YOUR SCENE. A NEW HORIZON.</span><h2>From empty space<br>to <em>atmosphere.</em></h2><p>Keep your camera, objects and render loop. The library runs the attractors on the GPU and puts their six-camera capture into your scene’s background.</p><a class="text-link" href="https://github.com/busovikov/particles-skybox#readme">Read the documentation ↗</a></div><div class="code-card"><div class="code-heading"><span>your-world.js</span><button id="copy-code" type="button">Copy code ↗</button></div><pre><code id="example-code">import { Timer } from 'three/webgpu';
+import { ParticleSkybox } from 'particles-skybox';
+
+const sky = await ParticleSkybox.create({
+  renderer,  // your WebGPURenderer
+  scene,     // your existing 3D world
+  camera,
+  warmup: 12 // simulation seconds
+});
+
+const timer = new Timer();
+renderer.setAnimationLoop(timestamp =&gt; {
+  timer.update(timestamp);
+  sky.update(timer.getDelta(), camera);
+  renderer.render(scene, camera);
+});</code></pre><div class="code-footer"><span>ES MODULE</span><span>THREE.JS r180</span></div></div>
+<div class="feature-row"><article><span>01 / GPU NATIVE</span><h3>Motion, kept on the GPU.</h3><p>Particle positions stay in GPU buffers. A shared preparation pass feeds the cube faces.</p></article><article><span>02 / READY WHEN YOU ARE</span><h3>Skip the cold start.</h3><p>Warm up before the first frame, with progress and cancellation. No intermediate cube captures.</p></article><article><span>03 / REAL 3D WORLDS</span><h3>Part of your 3D world.</h3><p>It lives in scene.background. Your meshes stay in the foreground and your camera stays yours.</p></article></div></section>
+</main><footer class="site-footer"><a class="wordmark" href="#">PARTICLES<span>SKYBOX</span></a><span>BUILT WITH THREE.JS · MIT LICENSE</span><a href="https://github.com/busovikov/particles-skybox">MAKE SOMETHING THAT MOVES ↗</a></footer><script type="module" src="./demo/main.js"></script></body></html>

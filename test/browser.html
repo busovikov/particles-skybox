@@ -1,0 +1,25 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Particles Skybox integration check</title><style>body{margin:0;background:#111;color:#eee;font:13px monospace}pre{position:absolute;top:12px;left:18px;background:#111d;padding:16px;z-index:1}canvas{display:block}</style><pre id="status">Initializing a host world…</pre><script type="module">
+import * as THREE from 'three/webgpu';
+import {ParticleSkybox} from '../src/index.js';
+const renderer=new THREE.WebGPURenderer({antialias:false});renderer.setSize(800,600);document.body.append(renderer.domElement);
+const scene=new THREE.Scene(),original=new THREE.Color('#17202b');scene.background=original;
+const camera=new THREE.PerspectiveCamera(60,800/600,.01,100);camera.position.set(0,0,4);
+const cube=new THREE.Mesh(new THREE.BoxGeometry(.8,.8,.8),new THREE.MeshBasicMaterial({color:'#52e5c8'}));scene.add(cube);
+const checks=[];const verify=(test,message)=>{if(!test)throw new Error(message);checks.push('PASS '+message);};
+let effect;
+try{
+  effect=await ParticleSkybox.create({renderer,scene,camera,warmup:.5,resolution:256});
+  verify(scene.background===effect.texture,'effect attaches its cubemap to the host scene');
+  verify(cube.parent===scene&&scene.children.length===1,'host foreground geometry is preserved');
+  verify(camera.position.equals(new THREE.Vector3(0,0,4)),'host camera pose is preserved');
+  verify(Math.abs(effect.time-.5)<1e-10,'warmup advances exactly 0.5 simulation seconds');
+  effect.update(.016,camera);renderer.render(scene,camera);
+  await renderer.getArrayBufferAsync(effect.particles.positionBuffer.value);
+  effect.dispose();verify(scene.background===original,'dispose restores the host background');
+  verify(renderer.domElement.parentElement===document.body,'dispose preserves the host renderer and canvas');
+  // Create again on the same renderer: compute-only buffers must not break reuse.
+  effect=await ParticleSkybox.create({renderer,scene,camera,warmup:.25,resolution:256});
+  effect.update(0,camera);renderer.render(scene,camera);verify(scene.background===effect.texture,'renderer can host a second instance after disposal');
+  document.getElementById('status').textContent=checks.join('\n')+'\nREADY · foreground cube over a live particle skybox';
+}catch(error){document.getElementById('status').textContent='FAIL '+error.stack;console.error(error);}
+</script></html>
